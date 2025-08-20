@@ -1,10 +1,17 @@
-from typing import List
+# main.py
+# Stdlib
+from contextlib import asynccontextmanager
+from typing import Annotated, List
+
+# Third party
+from database import async_session, engine
 from fastapi import FastAPI, HTTPException, Path, status
-from sqlalchemy import select, desc, asc
+
 import models
 import schemas
-from database import engine, async_session
-from contextlib import asynccontextmanager
+
+from sqlalchemy import asc, desc, select
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -18,7 +25,9 @@ async def lifespan(app: FastAPI):
     yield
     await engine.dispose()
 
+
 app = FastAPI(lifespan=lifespan)
+
 
 @app.post(
     "/recipes/",
@@ -28,9 +37,6 @@ app = FastAPI(lifespan=lifespan)
 async def create_recipe(recipe: schemas.RecipeIn) -> schemas.RecipeOut:
     """
     Создание нового рецепта.
-
-    - **Параметры**: `recipe` (данные рецепта)
-    - **Возвращает**: созданный рецепт с ID и нулевым количеством просмотров.
     """
     new_recipe = models.Recipe(**recipe.model_dump())
     async with async_session() as session:
@@ -38,6 +44,7 @@ async def create_recipe(recipe: schemas.RecipeIn) -> schemas.RecipeOut:
             session.add(new_recipe)
         await session.refresh(new_recipe)
         return new_recipe
+
 
 @app.get(
     "/recipes/",
@@ -47,30 +54,28 @@ async def create_recipe(recipe: schemas.RecipeIn) -> schemas.RecipeOut:
 async def get_all_recipes() -> List[schemas.RecipeOut]:
     """
     Получение всех рецептов.
-
-    Сортировка:
-    - по количеству просмотров (по убыванию)
-    - по времени приготовления (по возрастанию)
     """
     async with async_session() as session:
         result = await session.execute(
-            select(models.Recipe)
-            .order_by(desc(models.Recipe.number_views), asc(models.Recipe.time_cooking))
+            select(models.Recipe).order_by(
+                desc(models.Recipe.number_views),
+                asc(models.Recipe.time_cooking),
+            )
         )
         recipes = result.scalars().all()
         return recipes
+
 
 @app.get(
     "/recipes/{recipe_id}",
     response_model=schemas.RecipeDetail,
     status_code=status.HTTP_200_OK
 )
-async def get_recipe_id(recipe_id: int = Path(..., title="ID рецепта")) -> schemas.RecipeDetail:
+async def get_recipe_id(
+    recipe_id: Annotated[int, Path(title="ID рецепта")]
+) -> schemas.RecipeDetail:
     """
     Получение рецепта по ID.
-
-    - Увеличивает счётчик просмотров на 1.
-    - Если рецепт не найден — возвращает 404.
     """
     async with async_session() as session:
         result = await session.execute(
@@ -84,5 +89,4 @@ async def get_recipe_id(recipe_id: int = Path(..., title="ID рецепта")) -
         recipe.number_views += 1
         await session.commit()
         await session.refresh(recipe)
-
         return recipe
