@@ -11,6 +11,7 @@ import schemas
 
 from sqlalchemy import asc, desc, select
 
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
