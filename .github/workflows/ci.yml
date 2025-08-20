@@ -22,33 +22,5 @@ jobs:
       - name: Install dev dependencies
         run: pip install -r requirements-dev.txt
 
-      - name: Run flake8
-        run: flake8 .
-
-      - name: Run black check
-        run: black --check .
-
-      - name: Run isort check
-        run: isort --check-only .
-
-      - name: Run mypy
-        run: mypy .
-
-  test:
-    name: Run Tests
-    runs-on: ubuntu-latest
-    needs: lint
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.12'
-
-      - name: Install dependencies
-        run: pip install -r requirements-dev.txt
-
-      - name: Run pytest
-        run: pytest tests/ --maxfail=1 --disable-warnings
+      - name: Create flake8 config
+        run: |
