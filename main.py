@@ -1,10 +1,16 @@
+# main.py
+from contextlib import asynccontextmanager
 from typing import List
+
+# Third party
 from fastapi import FastAPI, HTTPException, Path, status
 from sqlalchemy import select, desc, asc
+
+# Local
 import models
 import schemas
 from database import engine, async_session
-from contextlib import asynccontextmanager
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -18,7 +24,9 @@ async def lifespan(app: FastAPI):
     yield
     await engine.dispose()
 
+
 app = FastAPI(lifespan=lifespan)
+
 
 @app.post(
     "/recipes/",
@@ -39,6 +47,7 @@ async def create_recipe(recipe: schemas.RecipeIn) -> schemas.RecipeOut:
         await session.refresh(new_recipe)
         return new_recipe
 
+
 @app.get(
     "/recipes/",
     response_model=List[schemas.RecipeOut],
@@ -54,11 +63,14 @@ async def get_all_recipes() -> List[schemas.RecipeOut]:
     """
     async with async_session() as session:
         result = await session.execute(
-            select(models.Recipe)
-            .order_by(desc(models.Recipe.number_views), asc(models.Recipe.time_cooking))
+            select(models.Recipe).order_by(
+                desc(models.Recipe.number_views),
+                asc(models.Recipe.time_cooking)
+            )
         )
         recipes = result.scalars().all()
         return recipes
+
 
 @app.get(
     "/recipes/{recipe_id}",
@@ -84,5 +96,4 @@ async def get_recipe_id(recipe_id: int = Path(..., title="ID рецепта")) -
         recipe.number_views += 1
         await session.commit()
         await session.refresh(recipe)
-
         return recipe
