@@ -4,14 +4,12 @@ from contextlib import asynccontextmanager
 from typing import Annotated, List
 
 # Third party
-from fastapi import FastAPI, HTTPException, Path, status
-from sqlalchemy import asc, desc, select
-
-# Local imports
 from database import async_session, engine
+from fastapi import FastAPI, HTTPException, Path, status
 import models
 import schemas
 
+from sqlalchemy import asc, desc, select
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
