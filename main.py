@@ -1,6 +1,7 @@
 # main.py
+# Stdlib
 from contextlib import asynccontextmanager
-from typing import List, Annotated
+from typing import Annotated, List
 
 # Third party
 from fastapi import FastAPI, HTTPException, Path, status
