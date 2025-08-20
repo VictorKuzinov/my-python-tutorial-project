@@ -1,15 +1,15 @@
 # main.py
 from contextlib import asynccontextmanager
-from typing import List
+from typing import List, Annotated
 
 # Third party
 from fastapi import FastAPI, HTTPException, Path, status
-from sqlalchemy import select, desc, asc
+from sqlalchemy import asc, desc, select
 
 # Local
+from database import async_session, engine
 import models
 import schemas
-from database import engine, async_session
 
 
 @asynccontextmanager
@@ -36,9 +36,6 @@ app = FastAPI(lifespan=lifespan)
 async def create_recipe(recipe: schemas.RecipeIn) -> schemas.RecipeOut:
     """
     Создание нового рецепта.
-
-    - **Параметры**: `recipe` (данные рецепта)
-    - **Возвращает**: созданный рецепт с ID и нулевым количеством просмотров.
     """
     new_recipe = models.Recipe(**recipe.model_dump())
     async with async_session() as session:
@@ -56,16 +53,12 @@ async def create_recipe(recipe: schemas.RecipeIn) -> schemas.RecipeOut:
 async def get_all_recipes() -> List[schemas.RecipeOut]:
     """
     Получение всех рецептов.
-
-    Сортировка:
-    - по количеству просмотров (по убыванию)
-    - по времени приготовления (по возрастанию)
     """
     async with async_session() as session:
         result = await session.execute(
             select(models.Recipe).order_by(
                 desc(models.Recipe.number_views),
-                asc(models.Recipe.time_cooking)
+                asc(models.Recipe.time_cooking),
             )
         )
         recipes = result.scalars().all()
@@ -77,12 +70,11 @@ async def get_all_recipes() -> List[schemas.RecipeOut]:
     response_model=schemas.RecipeDetail,
     status_code=status.HTTP_200_OK
 )
-async def get_recipe_id(recipe_id: int = Path(..., title="ID рецепта")) -> schemas.RecipeDetail:
+async def get_recipe_id(
+    recipe_id: Annotated[int, Path(title="ID рецепта")]
+) -> schemas.RecipeDetail:
     """
     Получение рецепта по ID.
-
-    - Увеличивает счётчик просмотров на 1.
-    - Если рецепт не найден — возвращает 404.
     """
     async with async_session() as session:
         result = await session.execute(
