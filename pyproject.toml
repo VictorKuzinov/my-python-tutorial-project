@@ -1,0 +1,5 @@
+[tool.isort]
+known_local_folder = ["database", "models", "schemas"]
+
+[tool.flake8]
+application-import-names = ["database", "models", "schemas"]
