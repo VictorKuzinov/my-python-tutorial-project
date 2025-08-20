@@ -8,8 +8,8 @@ engine = create_async_engine(
     DATABASE_URL, connect_args={"check_same_thread": False}
 )
 async_session = sessionmaker(
-    engine, 
-    expire_on_commit=False, 
+    engine,
+    expire_on_commit=False,
     class_=AsyncSession
 )
 
