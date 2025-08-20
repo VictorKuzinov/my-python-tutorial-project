@@ -7,9 +7,9 @@ from typing import Annotated, List
 from database import async_session, engine
 from fastapi import FastAPI, HTTPException, Path, status
 
-# Local
 import models
 import schemas
+
 from sqlalchemy import asc, desc, select
 
 
