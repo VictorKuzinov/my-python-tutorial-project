@@ -2,14 +2,13 @@
 # Stdlib
 from contextlib import asynccontextmanager
 from typing import Annotated, List
+from sqlalchemy import asc, desc, select
 
 # Third party
 from database import async_session, engine
 from fastapi import FastAPI, HTTPException, Path, status
 import models
 import schemas
-
-from sqlalchemy import asc, desc, select
 
 
 @asynccontextmanager
