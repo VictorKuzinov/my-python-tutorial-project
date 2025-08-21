@@ -1,0 +1,10 @@
+[flake8]
+max-line-length = 100
+extend-ignore =
+    E203,  # конфликт с black (пробелы при срезах)
+    W503,  # переносы строк перед бинарными операторами
+exclude =
+    __pycache__,
+    .git,
+    .venv,
+    .mypy_cache
