@@ -14,8 +14,8 @@ known_local_folder = ["database", "models", "schemas"]
 
 [tool.flake8]
 max-line-length = 88
-application-import-names = ["database", "models", "schemas"]
-
+# flake8-isort будет проверять импорты, поэтому application-import-names убираем
+select = ["C", "E", "F", "W", "I"]  # I = импорты (flake8-isort)
 extend-ignore = [
     "E203",  # конфликтует с black (срезы)
     "W503",  # конфликтует с black (разрывы строк перед оператором)
