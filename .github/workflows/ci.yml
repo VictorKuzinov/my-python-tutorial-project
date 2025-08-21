@@ -22,9 +22,6 @@ jobs:
       - name: Install dev dependencies
         run: pip install -r requirements-dev.txt
 
-      - name: Check flake8 version
-        run: flake8 --show-config
-
       - name: Run flake8
         run: flake8 .
 
