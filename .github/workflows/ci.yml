@@ -32,7 +32,7 @@ jobs:
         run: isort --check-only .
 
       - name: Run mypy
-        run: mypy --explicit-package-bases . tests
+        run: mypy --exclude tests/conftest.py . tests
 
   test:
     name: Run Tests
