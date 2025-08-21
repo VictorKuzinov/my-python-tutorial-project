@@ -8,4 +8,4 @@ engine = create_async_engine(DATABASE_URL, connect_args={"check_same_thread": Fa
 
 async_session = cast(sessionmaker, sessionmaker(engine, expire_on_commit=False, class_=AsyncSession))
 
-Base = declarative_base())
+Base = declarative_base()
