@@ -24,7 +24,9 @@ class RecipeOut(BaseRecipe):
 
 class RecipeDetail(BaseModel):
     recipe_name: str = Field(..., title="Название блюда")
-    time_cooking: int = Field(..., title="Время приготовления (в минутах)", ge=1)
+    time_cooking: int = Field(
+        ..., title="Время приготовления (в минутах)", ge=1
+    )
     ingredients: str = Field(..., title="Список ингредиентов")
     description: str = Field(..., title="Описание")
     model_config = ConfigDict(from_attributes=True)
