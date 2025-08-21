@@ -17,7 +17,7 @@ async def test_recipe(async_client):
         "recipe_name": "Тестовый борщ",
         "ingredients": "Свекла, мясо, капуста",
         "description": "Просто борщ",
-        "time_cooking": 60
+        "time_cooking": 60,
     }
     response = await async_client.post("/recipes/", json=payload)
     return response.json()

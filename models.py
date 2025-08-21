@@ -9,7 +9,8 @@ class Recipe(Base):
     """
     Модель рецепта в базе данных.
     """
-    __tablename__ = 'recipes'
+
+    __tablename__ = "recipes"
 
     recipe_id = Column(Integer, primary_key=True, index=True)
     recipe_name = Column(String, index=True)

@@ -35,7 +35,7 @@ async def test_create_recipe(client: AsyncClient) -> None:
         "recipe_name": "Вареники",
         "time_cooking": 25,
         "ingredients": "Мука, вода, картофель",
-        "description": "Вкусное украинское блюдо"
+        "description": "Вкусное украинское блюдо",
     }
 
     response = await client.post("/recipes/", json=payload)
