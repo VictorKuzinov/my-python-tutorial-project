@@ -29,4 +29,4 @@ class RecipeDetail(BaseModel):
     ingredients: str = Field(..., title="Список ингредиентов")
     description: str = Field(..., title="Описание")
     model_config = ConfigDict(from_attributes=True)
-    
+
