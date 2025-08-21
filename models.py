@@ -1,6 +1,6 @@
 # model.py
 
-from sqlalchemy import Column, String, Integer, Text
+from sqlalchemy import Column, String, Text, Integer
 
 from database import Base
 
