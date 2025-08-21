@@ -56,7 +56,8 @@ async def get_all_recipes() -> List[schemas.RecipeOut]:
             )
         )
         recipes = result.scalars().all()
-        return recipes
+        # Преобразуем ORM объекты в Pydantic-модели
+        return [schemas.RecipeOut.from_attributes(recipe) for recipe in recipes]
 
 
 @app.get(
@@ -82,4 +83,5 @@ async def get_recipe_id(
         recipe.number_views += 1
         await session.commit()
         await session.refresh(recipe)
-        return recipe
+        # Преобразование ORM -> Pydantic
+        return schemas.RecipeDetail.from_attributes(recipe)
