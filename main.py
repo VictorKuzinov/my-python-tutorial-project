@@ -30,8 +30,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
-@app.post(
-    "/recipes/", response_model=schemas.RecipeOut, status_code=status.HTTP_201_CREATED)
+@app.post("/recipes/", response_model=schemas.RecipeOut, status_code=status.HTTP_201_CREATED)
 async def create_recipe(recipe: schemas.RecipeIn) -> schemas.RecipeOut:
     """
     Создание нового рецепта.
@@ -44,11 +43,7 @@ async def create_recipe(recipe: schemas.RecipeIn) -> schemas.RecipeOut:
         return new_recipe
 
 
-@app.get(
-    "/recipes/",
-    response_model=List[schemas.RecipeOut],
-    status_code=status.HTTP_200_OK
-)
+@app.get("/recipes/", response_model=List[schemas.RecipeOut], status_code=status.HTTP_200_OK)
 async def get_all_recipes() -> List[schemas.RecipeOut]:
     """
     Получение всех рецептов.
@@ -65,7 +60,10 @@ async def get_all_recipes() -> List[schemas.RecipeOut]:
 
 
 @app.get(
-    "/recipes/{recipe_id}", response_model=schemas.RecipeDetail, status_code=status.HTTP_200_OK,)
+    "/recipes/{recipe_id}",
+    response_model=schemas.RecipeDetail,
+    status_code=status.HTTP_200_OK,
+)
 async def get_recipe_id(
     recipe_id: Annotated[int, Path(title="ID рецепта")],
 ) -> schemas.RecipeDetail:
