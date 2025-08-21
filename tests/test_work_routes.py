@@ -1,4 +1,4 @@
-import pytest_asyncio
+import pytest
 from httpx import AsyncClient
 
 
