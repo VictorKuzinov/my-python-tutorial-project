@@ -1,7 +1,6 @@
-# test_work_routes.py
-
 import pytest
 from httpx import AsyncClient
+
 
 @pytest.mark.asyncio
 async def test_get_recipe_by_id(client: AsyncClient) -> None:
@@ -16,6 +15,7 @@ async def test_get_recipe_by_id(client: AsyncClient) -> None:
     assert "description" in data
     assert "time_cooking" in data
 
+
 @pytest.mark.asyncio
 async def test_get_all_recipes(client: AsyncClient) -> None:
     """
@@ -24,6 +24,7 @@ async def test_get_all_recipes(client: AsyncClient) -> None:
     response = await client.get("/recipes/")
     assert response.status_code == 200
     assert isinstance(response.json(), list)
+
 
 @pytest.mark.asyncio
 async def test_create_recipe(client: AsyncClient) -> None:
@@ -42,6 +43,7 @@ async def test_create_recipe(client: AsyncClient) -> None:
     data = response.json()
     assert data["recipe_name"] == "Вареники"
     assert data["number_views"] == 0  # вместо проверки "что его нет"
+
 
 @pytest.mark.asyncio
 async def test_get_recipe_not_found(client: AsyncClient) -> None:
