@@ -1,8 +1,8 @@
-# homework/tests/conftest.py
-import pytest_asyncio
 from httpx import AsyncClient
+import pytest_asyncio
 
 BASE_URL = "http://127.0.0.1:80"  # Убедись, что приложение запущено
+
 
 @pytest_asyncio.fixture
 async def client():
