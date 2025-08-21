@@ -80,7 +80,7 @@ async def get_recipe_id(
         if recipe is None:
             raise HTTPException(status_code=404, detail="Рецепт не найден")
 
-        recipe.number_views += 1
+        recipe.number_views += 1  # type: ignore
         await session.commit()
         await session.refresh(recipe)
         # Преобразование ORM -> Pydantic
