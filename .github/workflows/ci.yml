@@ -32,7 +32,7 @@ jobs:
         run: isort --check-only .
 
       - name: Run mypy
-        run: mypy . tests
+        run: mypy --explicit-package-bases . tests
 
   test:
     name: Run Tests
