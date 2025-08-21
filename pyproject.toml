@@ -1,11 +1,11 @@
 [tool.black]
-line-length = 88
+line-length = 100
 target-version = ["py310"]
 skip-string-normalization = false
 
 [tool.isort]
 profile = "black"
-line_length = 88
+line_length = 100
 multi_line_output = 3
 include_trailing_comma = true
 force_grid_wrap = 0
@@ -13,17 +13,17 @@ force_sort_within_sections = true
 combine_as_imports = true
 known_local_folder = ["database", "models", "schemas"]
 
-[tool.flake8]
-max-line-length = 88
+№[tool.flake8]
+# max-line-length = 100
 # flake8-isort будет проверять импорты, поэтому application-import-names убираем
-select = ["C", "E", "F", "W", "I"]  # I = импорты (flake8-isort)
-extend-ignore = [
-    "E203",  # конфликтует с black (срезы)
-    "W503",  # конфликтует с black (разрывы строк перед оператором)
-]
-exclude = [
-    "__pycache__",
-    ".git",
-    ".venv",
-    ".mypy_cache",
-]
+# select = ["C", "E", "F", "W", "I"]  # I = импорты (flake8-isort)
+# extend-ignore = [
+#     "E203",  # конфликтует с black (срезы)
+#     "W503",  # конфликтует с black (разрывы строк перед оператором)
+# ]
+# exclude = [
+#     "__pycache__",
+#     ".git",
+#     ".venv",
+#     ".mypy_cache",
+# ]
