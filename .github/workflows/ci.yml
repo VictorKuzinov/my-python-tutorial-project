@@ -32,7 +32,7 @@ jobs:
         run: isort --check-only .
 
       - name: Run mypy
-        run: mypy .
+        run: mypy my_python_tutorial_project tests
 
   test:
     name: Run Tests
