@@ -32,7 +32,7 @@ app = FastAPI(lifespan=lifespan)
 
 @app.post(
     "/recipes/",
-    response_model=schemas.RecipeOut, 
+    response_model=schemas.RecipeOut,
     status_code=status.HTTP_201_CREATED
 )
 async def create_recipe(recipe: schemas.RecipeIn) -> schemas.RecipeOut:
@@ -48,8 +48,8 @@ async def create_recipe(recipe: schemas.RecipeIn) -> schemas.RecipeOut:
 
 
 @app.get(
-    "/recipes/", 
-    response_model=List[schemas.RecipeOut], 
+    "/recipes/",
+    response_model=List[schemas.RecipeOut],
     status_code=status.HTTP_200_OK
 )
 async def get_all_recipes() -> List[schemas.RecipeOut]:
