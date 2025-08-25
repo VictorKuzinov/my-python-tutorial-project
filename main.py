@@ -9,9 +9,9 @@ from fastapi import FastAPI, HTTPException, Path, status
 from sqlalchemy import asc, desc, select
 
 # Local
-from .database import async_session, engine
 from . import models
 from . import schemas
+from .database import async_session, engine
 
 
 @asynccontextmanager
