@@ -7,8 +7,8 @@ from fastapi import FastAPI, HTTPException, Path, status
 from sqlalchemy import asc, desc, select
 
 # Local
-from . import models, schemas
-from .database import async_session, engine
+from my_python_tutorial_project import models, schemas
+from my_python_tutorial_project.database import async_session, engine
 
 
 @asynccontextmanager
