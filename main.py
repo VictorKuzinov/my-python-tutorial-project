@@ -1,5 +1,3 @@
-# main.py
-
 # Stdlib
 from contextlib import asynccontextmanager
 from typing import Annotated, List
@@ -9,9 +7,8 @@ from fastapi import FastAPI, HTTPException, Path, status
 from sqlalchemy import asc, desc, select
 
 # Local
+from . import models, schemas
 from .database import async_session, engine
-from . import models
-from . import schemas
 
 
 @asynccontextmanager
