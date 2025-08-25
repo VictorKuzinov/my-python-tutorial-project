@@ -10,8 +10,8 @@ async def test_get_recipe_by_id(client):
             "recipe_name": "Test soup",
             "time_cooking": 30,
             "ingredients": "Water, salt, potatoes",
-            "description": "Simple test recipe"
-        }
+            "description": "Simple test recipe",
+        },
     )
     assert response.status_code == 201
     created_recipe = response.json()
