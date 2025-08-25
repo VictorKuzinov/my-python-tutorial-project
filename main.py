@@ -9,9 +9,9 @@ from fastapi import FastAPI, HTTPException, Path, status
 from sqlalchemy import asc, desc, select
 
 # Local
-from database import async_session, engine
-import models
-import schemas
+from .database import async_session, engine
+from . import models
+from . import schemas
 
 
 @asynccontextmanager
@@ -57,7 +57,7 @@ async def get_all_recipes() -> List[schemas.RecipeOut]:
         )
         recipes = result.scalars().all()
         # Преобразуем ORM объекты в Pydantic-модели
-        return [schemas.RecipeOut.from_attributes(recipe) for recipe in recipes]  # type: ignore
+        return [schemas.RecipeOut.model_validate(recipe) for recipe in recipes]  # type: ignore
 
 
 @app.get(
@@ -84,4 +84,4 @@ async def get_recipe_id(
         await session.commit()
         await session.refresh(recipe)
         # Преобразование ORM -> Pydantic
-        return schemas.RecipeDetail.from_attributes(recipe)  # type: ignore
+        return schemas.RecipeDetail.model_validate(recipe)  # type: ignore

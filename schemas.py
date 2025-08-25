@@ -14,8 +14,8 @@ class RecipeIn(BaseRecipe):
 
 class RecipeOut(BaseRecipe):
     recipe_id: int = Field(..., title="ID рецепта")
-    model_config = ConfigDict(from_attributes=True)
     number_views: int = Field(..., title="Количество просмотров", ge=0)
+    model_config = ConfigDict(from_attributes=True)
 
 
 class RecipeDetail(BaseModel):

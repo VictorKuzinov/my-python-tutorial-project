@@ -6,4 +6,5 @@ greenlet
 pydantic
 pytest
 pytest-asyncio
+asgi-lifespan
 httpx
